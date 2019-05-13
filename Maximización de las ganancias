@@ -1,0 +1,305 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.text.*;
+/**
+ * Write a description of class mecanica here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class integrador extends JFrame implements ActionListener
+{
+    float  ratedecmr, costmc, price;
+    int quant;
+    double grav = -9.8; //*t
+    double gravcua= grav/2; // *t^2
+    double velinic; // *t
+    double time = (-velinic/grav);
+    double maxheight;
+    double metros;
+    // double v1,v2,v3, abajo, disc, der, izq, x1, x2;
+    double v1=gravcua;
+    double v2= velinic;
+    double v3= -metros;
+    double abajo=(2*v1);
+    double disc=Math.pow(v2,2)-(4*(v1*v3));
+    double x1= ((-v2)+(Math.sqrt(disc)))/abajo;
+    double x2= ((-v2)-(Math.sqrt(disc)))/abajo;
+    double  der= Math.sqrt(-disc)/abajo;
+    double izq=-v2/abajo;
+    DecimalFormat df = new DecimalFormat("#.####");
+    //JMenuBar contenedor;
+
+    //JMenuItem estandar,cientifica,programador,copiar,pegar,historial,ver_ayuda,acerca_calculadora;
+    JButton jButtonmec1=new JButton("Aceptar");
+    JButton jButtonmec2=new JButton("Aceptar");
+    JButton jButtonmarg = new JButton("Aceptar");
+    JTextField TextValor1 = new JTextField();
+    JTextField TextValor2= new JTextField();
+    JTextField TextCost2 = new JTextField();
+    JTextField TextCost1 = new JTextField();
+    JTextField TextOrig = new JTextField();
+    JTextField TextRatedec = new JTextField();
+
+    JLabel lblVInicial = new JLabel("Velocidad inicial");
+    JLabel lblpuntos = new JLabel("");
+    JLabel lblIAltura = new JLabel("Altura");
+    JLabel lblCT1 = new JLabel("");
+    JLabel lblCT2 = new JLabel("");
+    JLabel lblFor1 = new JLabel("");
+    JLabel lblFor2 = new JLabel("");
+    JLabel lblFor3 = new JLabel("");
+    JLabel lblcost = new JLabel("Cost");
+    JLabel lbldemand = new JLabel("Revenue: ");
+    JLabel lblquantity = new JLabel("Quantity: ");
+    JLabel lblprice = new JLabel("`Price: ");
+    JLabel lblx2 = new JLabel("x^2 +");
+    JLabel lblx = new JLabel("x");
+    JLabel lblx1 = new JLabel("x -");
+    JLabel lblx22 = new JLabel("x^2");
+
+    JMenuBar contenedor;
+    JMenu area;
+    JMenuItem economia, mecanica;
+
+    public integrador(String nombre)
+    {
+        super(nombre);
+        iniciarControles();
+        System.out.print("\u000c");
+    }
+
+    public void iniciarControles()
+    {
+
+        //menu
+        contenedor = new JMenuBar();
+        area = new JMenu("Área");
+        economia = new JMenuItem("Economía");
+        mecanica= new JMenuItem("Mecánica");
+
+        this.setJMenuBar(contenedor);
+        contenedor.add(area);
+        area.add(economia);
+        area.add(mecanica);
+
+        jButtonmec1.setBounds(350,50,100,35);
+        jButtonmec2.setBounds(350,150,100,35);
+        TextValor1.setBounds(225,50,100,35);
+        TextValor2.setBounds(225,150,100,35);
+
+        lblVInicial.setBounds(25,50,200,35);
+        lblpuntos.setBounds(25,100,600,35);
+        lblIAltura.setBounds(25,150,400,35);
+        lblCT1.setBounds(25,200,400,35);
+        lblCT2.setBounds(25,240,400,35);
+        lblFor1.setBounds(25,280,400,35);
+        lblFor2.setBounds(25,310,400,35);
+        lblFor3.setBounds(25,340,400,35);
+        /*
+         * jButtonmarg.setBounds(260,20,100,35);
+        TextCost2.setBounds(220,70,60,35);
+        TextCost1.setBounds(330,70,60,35);
+        TextOrig.setBounds(220,130,60,35);
+        TextRatedec.setBounds(330,130,60,35);
+        lblcost.setBounds(310,50,400,35);
+        lbldemand.setBounds(300,100,400,35);
+        lblquantity.setBounds(220,160,400,35);
+        lblprice.setBounds(220,180,400,35);
+        lblx2.setBounds(290,70,100,35);
+        lblx.setBounds(395,70,100,35);
+        lblx1.setBounds(290,130,100,35);
+        lblx22.setBounds(395,130,100,35);
+         */
+        //Ahora se llmana los objetos al panel
+
+        this.getContentPane().add(jButtonmec1);
+        this.getContentPane().add(jButtonmec2);
+        this.getContentPane().add(jButtonmarg);
+        this.getContentPane().add(TextValor1);
+        this.getContentPane().add(TextValor2);
+        this.getContentPane().add(TextCost2);
+        this.getContentPane().add(TextCost1);
+        this.getContentPane().add(TextOrig);
+        this.getContentPane().add(TextRatedec);
+
+        this.getContentPane().add(lblVInicial);
+        this.getContentPane().add(lblpuntos);
+        this.getContentPane().add(lblIAltura);
+        this.getContentPane().add(lblCT1);
+        this.getContentPane().add(lblCT2);
+        this.getContentPane().add(lblFor1);
+        this.getContentPane().add(lblFor2);
+        this.getContentPane().add(lblFor3);
+        this.getContentPane().add(lblcost);
+        this.getContentPane().add(lbldemand);
+        this.getContentPane().add(lblquantity);
+        this.getContentPane().add(lblprice);
+        this.getContentPane().add(lblx2);
+        this.getContentPane().add(lblx);
+        this.getContentPane().add(lblx1);
+        this.getContentPane().add(lblx22);
+
+        jButtonmec1.addActionListener(this);
+        jButtonmec2.addActionListener(this);
+        jButtonmarg.addActionListener(this);
+        economia.addActionListener(this);
+        mecanica.addActionListener(this);
+
+        this.setBounds(600,200,750,500);
+        this.setResizable(isMaximumSizeSet());
+        this.getContentPane().setBackground(new java.awt.Color(151,151,151));
+        this.setLayout(null);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    //ejecución de la aplicación
+    public static void main(String [] args)
+    {
+        new integrador("Cálculo");
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+
+        if(e.getSource()==jButtonmec1)
+        {
+            double grav = -9.8; //*t
+            double gravcua= grav/2; // *t^2
+            double velinic; // *t
+            velinic = Double.parseDouble(TextValor1.getText());
+
+            double time = (-velinic/grav);
+            double maxheight;
+            maxheight= (gravcua*(time*time))+(velinic*time);
+            lblpuntos.setText("llegó a "+ df.format(maxheight)  + "m en " + df.format(time)+"s");
+
+            lblFor1.setText("d(t): "+ gravcua+"t^2 + "+velinic +"t m");
+            lblFor2.setText("v(t): " +grav+"t + "+velinic +"m/sec");
+            lblFor3.setText("a(t): " + grav +"m/sec^2");
+        }
+        if(e.getSource()==jButtonmec2)
+        {
+
+            velinic = Double.parseDouble(TextValor1.getText());
+            metros = Double.parseDouble(TextValor2.getText());
+
+            v1=gravcua;
+            v2= velinic;
+            v3= -metros;
+            abajo =(2*v1);
+            disc=Math.pow(v2,2)-(4*(v1*v3));
+            x1= ((-v2)+(Math.sqrt(disc)))/abajo;
+            x2= ((-v2)-(Math.sqrt(disc)))/abajo;
+            der= Math.sqrt(-disc)/abajo;
+            izq=-v2/abajo;
+            if(disc<0)
+            { 
+                lblCT1.setText("nunca pasa por ahí");
+                lblCT2.setText(" ");
+            }
+            else if(disc == 0)
+            { 
+                double x= -v2/abajo;
+                double veloc= grav*x + velinic;
+                lblCT1.setText("t: " + x + "v:" + veloc);
+                lblCT2.setText(" ");
+            }
+            else{
+                double veloc1= grav*x1 + velinic;
+                double veloc2= grav*x2 + velinic;
+                lblCT1.setText("Cuando t="+df.format(x1) + ", v= "+df.format(veloc1));
+                lblCT2.setText("Cuando t="+df.format(x2) + ", v= "+df.format(veloc2));
+            }
+
+        }
+        if(e.getSource()==jButtonmarg){
+            float cost1=Float.parseFloat(TextCost1.getText());
+            float cost2=Float.parseFloat(TextCost2.getText());
+            float orig=Float.parseFloat(TextOrig.getText());
+            float ratedec=Float.parseFloat(TextRatedec.getText());
+            float cost2mc = 2*cost2;
+            float ratedecmr = 2*ratedec;
+            Float quantity= ((orig - cost1)/(cost2mc+ratedecmr));
+            int quant = quantity.intValue();
+            double price = orig - (ratedec*quant);
+
+            lblquantity.setText("quantity: "+ quant );
+            lblprice.setText("price: " + price);
+
+        }
+        if(e.getSource()==economia){ 
+            jButtonmarg.setBounds(260,20,100,35);
+            TextCost2.setBounds(220,70,60,35);
+            TextCost1.setBounds(330,70,60,35);
+            TextOrig.setBounds(220,130,60,35);
+            TextRatedec.setBounds(330,130,60,35);
+            lblcost.setBounds(310,50,400,35);
+            lbldemand.setBounds(300,100,400,35);
+            lblquantity.setBounds(220,160,400,35);
+            lblprice.setBounds(220,180,400,35);
+            lblx2.setBounds(290,70,100,35);
+            lblx.setBounds(395,70,100,35);
+            lblx1.setBounds(290,130,100,35);
+            lblx22.setBounds(395,130,100,35);
+
+            lblVInicial.setVisible(false);    
+            jButtonmec1.setVisible(false);
+            jButtonmec2.setVisible(false);
+            lblIAltura.setVisible(false);
+            TextValor1.setVisible(false);
+            TextValor2.setVisible(false);
+            lblcost.setVisible(true);
+            lbldemand.setVisible(true);
+            lblquantity.setVisible(true);
+            lblprice.setVisible(true);
+            TextCost1.setVisible(true);
+            TextCost2.setVisible(true);
+            TextOrig.setVisible(true);
+            TextRatedec.setVisible(true);
+            jButtonmarg.setVisible(true);
+            lblx2.setVisible(true);
+            lblx.setVisible(true);
+            lblx1.setVisible(true);
+            lblx22.setVisible(true);
+            lblFor1.setVisible(false);
+            lblCT1.setVisible(false);
+            lblFor2.setVisible(false);
+            lblFor3.setVisible(false);
+            lblCT2.setVisible(false);
+            lblpuntos.setVisible(false);
+
+
+        }
+        else if(e.getSource()==mecanica){
+            lblVInicial.setVisible(true);    
+            jButtonmec2.setVisible(true);
+            jButtonmec1.setVisible(true);
+            jButtonmarg.setVisible(false);
+            lblIAltura.setVisible(true);
+            TextValor1.setVisible(true);
+            TextValor2.setVisible(true);
+            lblcost.setVisible(false);
+            lbldemand.setVisible(false);
+            lblquantity.setVisible(false);
+            lblprice.setVisible(false);
+            TextCost1.setVisible(false);
+            TextCost2.setVisible(false);
+            TextOrig.setVisible(false);
+            TextRatedec.setVisible(false);
+            lblx2.setVisible(false);
+            lblx.setVisible(false);
+            lblx1.setVisible(false);
+            lblx22.setVisible(false);
+            lblFor1.setVisible(true);
+            lblCT1.setVisible(true);
+            lblFor2.setVisible(true);
+            lblFor3.setVisible(true);
+            lblCT2.setVisible(true);
+            lblpuntos.setVisible(true);
+        }
+
+    }
+}
