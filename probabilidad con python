@@ -1,0 +1,89 @@
+# 0.41 0.37 0.16 0.05 0.01
+# 0.2 0.4 0.1 0.3
+from tkinter import *
+import math
+import matplotlib.pyplot as plt
+
+window = Tk()
+
+window.title("Proyecto de probabilidad")
+window.geometry('700x400')
+
+lbl_instrucciones = Label(window, text="ingresa xi:" , font=("Arial Bold", 12))
+lbl_instrucciones.grid(column=0, row=0)
+
+lbl_instrucciones = Label(window, text="ingresa pi:" , font=("Arial Bold", 12))
+lbl_instrucciones.grid(column=0, row=2)
+
+entrada_xi = Entry(window,width=100)
+entrada_xi.grid(column=0, row=1)
+entrada_pi = Entry(window,width=100)
+entrada_pi.grid(column=0, row=3)
+
+lbl_resultado1 = Label(window, text="Esperanza matematica = ",font=("Arial Bold", 12))
+lbl_resultado1.grid(column=0, row=5)
+
+lbl_resultado2 = Label(window, text="Varianza = ",font=("Arial Bold", 12))
+lbl_resultado2.grid(column=0, row=6)
+
+lbl_resultado3 = Label(window, text="Desviación típica = ",font=("Arial Bold", 12))
+lbl_resultado3.grid(column=0, row=7)
+
+
+
+def funcion1():
+    x = entrada_xi.get()
+    xi = x.split()
+    fx = entrada_pi.get()
+    pi = fx.split()
+    em1 = 0
+    em2 = 0
+    #aqui sacamos la esperanza matematica
+    for termino1 in range(len(xi)):
+        x1 = xi[termino1]
+        p1 = pi[termino1]
+        var1 = float(x1) * float(p1)
+        em1 = em1 + var1 
+        
+    #print (em1)
+    es1 = "Esperanza matematica = " + str(em1)
+    lbl_resultado1.configure(text= es1)
+    #calculamos la varianza
+    ex2 = em1**2
+    #print (ex2)
+    for termino2 in range(len(xi)):
+        x1 = xi[termino2]
+        p1 = pi[termino2]
+        var2 = (float(x1)**2) * float(p1)
+        em2 = em2 + var2
+    print (em2)
+    varianza = em2 - ex2
+    #print (varianza)
+    es2 = "Varianza = " + str(varianza)
+    lbl_resultado2.configure(text= es2)
+    desv = math.sqrt(varianza)
+    es3 = "Desviación típica = " + str(desv) 
+    lbl_resultado3.configure(text= es3)
+    fig = plt.figure(u'Gráfica de barras') # Figure
+    ax = fig.add_subplot(111) # Axes
+    xi.append("P total")
+    pi.append(str(1))
+    
+    nombres = xi
+    datos = pi
+    xx = range(len(datos))
+
+    ax.bar(xx, datos, width=0.8, align='center')
+    ax.set_xticks(xx)
+    ax.set_xticklabels(nombres)
+
+    plt.show()
+   
+    
+    
+
+    
+btn_accion1  = Button(window, text="resolver",command=funcion1)
+btn_accion1.grid(column=0, row=4)
+
+window.mainloop()
