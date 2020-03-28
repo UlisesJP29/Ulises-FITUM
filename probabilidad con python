@@ -56,7 +56,7 @@ def funcion1():
         p1 = pi[termino2]
         var2 = (float(x1)**2) * float(p1)
         em2 = em2 + var2
-    print (em2)
+    #print (em2)
     varianza = em2 - ex2
     #print (varianza)
     es2 = "Varianza = " + str(varianza)
@@ -64,11 +64,19 @@ def funcion1():
     desv = math.sqrt(varianza)
     es3 = "Desviación típica = " + str(desv) 
     lbl_resultado3.configure(text= es3)
+
+    
+    for i in range(len(pi)):
+        #test_list[i] = int(test_list[i]) 
+        pi[i] = float(pi[i])
+       
+        
+        
+    xi.append("P total")
+    pi.append(float(1))
     fig = plt.figure(u'Gráfica de barras') # Figure
     ax = fig.add_subplot(111) # Axes
-    xi.append("P total")
-    pi.append(str(1))
-    
+     
     nombres = xi
     datos = pi
     xx = range(len(datos))
